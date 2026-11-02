@@ -3,12 +3,12 @@
 page_title: "fjordrun_service_variables Data Source - fjordrun"
 subcategory: ""
 description: |-
-  A service's variables in one environment: as set (variables), and what the service receives (resolved). All sensitive.
+  A service's variables in one environment: as set (variables), and what the service receives (resolved). All sensitive. Needs the member role: for a viewer's token it is an error.
 ---
 
 # fjordrun_service_variables (Data Source)
 
-A service's variables in one environment: as set (`variables`), and what the service receives (`resolved`). All sensitive.
+A service's variables in one environment: as set (`variables`), and what the service receives (`resolved`). All sensitive. Needs the member role: for a viewer's token it is an error.
 
 ## Example Usage
 

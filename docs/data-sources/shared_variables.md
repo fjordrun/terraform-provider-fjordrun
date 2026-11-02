@@ -3,12 +3,12 @@
 page_title: "fjordrun_shared_variables Data Source - fjordrun"
 subcategory: ""
 description: |-
-  An environment's shared variables: as set (variables), and resolved (resolved). All sensitive.
+  An environment's shared variables: as set (variables), and resolved (resolved). All sensitive. Needs the member role: for a viewer's token it is an error.
 ---
 
 # fjordrun_shared_variables (Data Source)
 
-An environment's shared variables: as set (`variables`), and resolved (`resolved`). All sensitive.
+An environment's shared variables: as set (`variables`), and resolved (`resolved`). All sensitive. Needs the member role: for a viewer's token it is an error.
 
 ## Example Usage
 

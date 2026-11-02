@@ -3,12 +3,12 @@
 page_title: "fjordrun_service_access Data Source - fjordrun"
 subcategory: ""
 description: |-
-  Login and connection details of a service created from a template, filled in from its variables: for example a database's connection URL. Empty for other services.
+  Login and connection details of a service created from a template, filled in from its variables: for example a database's connection URL. Empty for other services. Needs the member role: for a viewer's token it is an error.
 ---
 
 # fjordrun_service_access (Data Source)
 
-Login and connection details of a service created from a template, filled in from its variables: for example a database's connection URL. Empty for other services.
+Login and connection details of a service created from a template, filled in from its variables: for example a database's connection URL. Empty for other services. Needs the member role: for a viewer's token it is an error.
 
 ## Example Usage
 

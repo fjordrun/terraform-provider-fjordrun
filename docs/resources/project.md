@@ -44,7 +44,7 @@ output "production_environment_id" {
 
 - `description` (String) Free text (up to 2000 characters).
 - `icon` (String) Icon name (up to 50 characters).
-- `region` (String) Where services run: `nbg1` (Nuremberg, the default), `fsn1` (Falkenstein) or `hel1` (Helsinki). Volumes stay in their location: the API refuses a change while the project has volumes.
+- `region` (String) Where services run: `nbg1` (Nuremberg, the default), `fsn1` (Falkenstein) or `hel1` (Finland). The API refuses a new project in a location that isn't open yet. Volumes stay in their location: the API refuses a change while the project has volumes.
 
 ### Read-Only
 
