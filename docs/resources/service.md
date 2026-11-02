@@ -5,7 +5,7 @@ subcategory: ""
 description: |-
   A service: web, worker, cron, database or agent, from a GitHub repository, a container image, or nothing yet. Functions have their own resource, fjordrun_function.
   Environments. A service exists in every environment of its project, with settings per environment. This resource creates the service and manages its settings in one environment, environment_id. At creation every environment gets the same configuration; afterwards a change here only applies to environment_id. Manage the settings in other environments with fjordrun_service_environment. Destroying this resource deletes the service in all environments.
-  Deployments. By default this resource never deploys: changes are saved, and a fjordrun_deployment rolls them out, once per apply, after variables, volumes and the rest are in place. Use config_hash as one of its triggers. Set auto_deploy = true to have this resource deploy by itself.
+  Deployments. By default this resource deploys when it is created and when it changes. For one rollout per apply, after variables, volumes and the rest are in place, set auto_deploy = false and use a fjordrun_deployment with config_hash as one of its triggers.
   Partial configuration. The API merges what you set with defaults for the kind. Fields you leave out take the API's value and aren't a diff. Removing a field from the configuration keeps its current value; to clear a string field, set it to "".
   ~> Deleting a service deletes its volumes and their data. Protect databases with lifecycle { prevent_destroy = true }.
 ---
@@ -16,7 +16,7 @@ A service: `web`, `worker`, `cron`, `database` or `agent`, from a GitHub reposit
 
 **Environments.** A service exists in every environment of its project, with settings per environment. This resource creates the service and manages its settings in one environment, `environment_id`. At creation every environment gets the same configuration; afterwards a change here only applies to `environment_id`. Manage the settings in other environments with `fjordrun_service_environment`. Destroying this resource deletes the service in all environments.
 
-**Deployments.** By default this resource never deploys: changes are saved, and a `fjordrun_deployment` rolls them out, once per apply, after variables, volumes and the rest are in place. Use `config_hash` as one of its triggers. Set `auto_deploy = true` to have this resource deploy by itself.
+**Deployments.** By default this resource deploys when it is created and when it changes. For one rollout per apply, after variables, volumes and the rest are in place, set `auto_deploy = false` and use a `fjordrun_deployment` with `config_hash` as one of its triggers.
 
 **Partial configuration.** The API merges what you set with defaults for the kind. Fields you leave out take the API's value and aren't a diff. Removing a field from the configuration keeps its current value; to clear a string field, set it to `""`.
 
@@ -101,6 +101,7 @@ resource "fjordrun_service" "db" {
 }
 
 # Nothing runs until a deployment.
+# Pair with auto_deploy = false on the provider or the service, or a change deploys twice.
 resource "fjordrun_deployment" "web" {
   service_id     = fjordrun_service.web.id
   environment_id = fjordrun_service.web.environment_id
@@ -120,7 +121,7 @@ resource "fjordrun_deployment" "web" {
 
 ### Optional
 
-- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `false`: the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit, so an apply with several changes to a service makes one deployment).
+- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `true`). With `false` the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit.
 - `billing_granularity` (String) Billing granularity: `second`, `minute` or `hour`.
 - `build` (Attributes) How the image is built (GitHub sources). Fields you leave out keep the value the API has. (see [below for nested schema](#nestedatt--build))
 - `canvas` (Attributes) Position on the project canvas. Assigned automatically if left out. (see [below for nested schema](#nestedatt--canvas))

@@ -54,6 +54,7 @@ resource "fjordrun_service_environment" "web_staging" {
   resources = { memory_mb = 512 }
 }
 
+# Pair with auto_deploy = false on the provider or the service, or a change deploys twice.
 resource "fjordrun_deployment" "web_staging" {
   service_id     = fjordrun_service_environment.web_staging.service_id
   environment_id = fjordrun_service_environment.web_staging.environment_id
@@ -71,7 +72,7 @@ resource "fjordrun_deployment" "web_staging" {
 
 ### Optional
 
-- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `false`: the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit, so an apply with several changes to a service makes one deployment).
+- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `true`). With `false` the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit.
 - `billing_granularity` (String) Billing granularity: `second`, `minute` or `hour`.
 - `build` (Attributes) How the image is built (GitHub sources). Fields you leave out keep the value the API has. (see [below for nested schema](#nestedatt--build))
 - `deploy` (Attributes) How the service runs. Fields you leave out keep the value the API has (its default for the service's kind, at first). (see [below for nested schema](#nestedatt--deploy))

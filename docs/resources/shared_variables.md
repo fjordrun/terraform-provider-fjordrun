@@ -51,7 +51,7 @@ resource "fjordrun_shared_variables" "production" {
 
 ### Optional
 
-- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `false`: the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit, so an apply with several changes to a service makes one deployment).
+- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `true`). With `false` the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit.
 - `exclusive` (Boolean) Whether this resource owns all the variables (default), or only the keys in `variables`.
 
 ### Read-Only

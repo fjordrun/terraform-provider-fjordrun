@@ -5,7 +5,7 @@ subcategory: ""
 description: |-
   A serverless function: a handler on a Fjordrun runtime, from inline code or a GitHub directory, with its own URL in every environment.
   A function is also a service, so fjordrun_service_variables, fjordrun_domain and fjordrun_deployment work with its id. Like a service it exists in every environment of the project: this resource manages its settings in environment_id; fjordrun_function_environment manages them in another.
-  Deployments. By default changes are saved and don't go live until a deployment: use fjordrun_deployment with code_sha256 among its triggers, or auto_deploy = true, which deploys once per apply of this resource.
+  Deployments. By default this resource deploys once per apply when it changes. With auto_deploy = false changes are saved and go live with a fjordrun_deployment that has code_sha256 among its triggers.
   ~> token is kept in Terraform state: use an encrypted remote state backend.
 ---
 
@@ -15,7 +15,7 @@ A serverless function: a handler on a Fjordrun runtime, from inline code or a Gi
 
 A function is also a service, so `fjordrun_service_variables`, `fjordrun_domain` and `fjordrun_deployment` work with its `id`. Like a service it exists in every environment of the project: this resource manages its settings in `environment_id`; `fjordrun_function_environment` manages them in another.
 
-**Deployments.** By default changes are saved and don't go live until a deployment: use `fjordrun_deployment` with `code_sha256` among its triggers, or `auto_deploy = true`, which deploys once per apply of this resource.
+**Deployments.** By default this resource deploys once per apply when it changes. With `auto_deploy = false` changes are saved and go live with a `fjordrun_deployment` that has `code_sha256` among its triggers.
 
 ~> `token` is kept in Terraform state: use an encrypted remote state backend.
 
@@ -77,7 +77,7 @@ output "token" {
 ### Optional
 
 - `auth` (String) `public` (default): anyone with the URL. `token`: requests need `token` in the `token_header` header.
-- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `false`: the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit, so an apply with several changes to a service makes one deployment).
+- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `true`). With `false` the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit.
 - `concurrency` (Number) Requests in flight per instance before another starts (1-100, default 10).
 - `entry` (String) The file that exports the handler, relative to the code root. Defaults to `index.mjs` or `main.py`.
 - `files` (Map of String) Inline code: file contents by relative path, up to 100 files and 256 KB in all (`package.json` or `requirements.txt` declare dependencies). Use `file("...")` to load them. Conflicts with `source`. Leave both out for the runtime's starter code, which this resource then doesn't manage. Code is shared by all the function's environments.

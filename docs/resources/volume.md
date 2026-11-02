@@ -10,7 +10,7 @@ description: |-
     prevent_destroy = true
   }
   
-  A new volume is mounted at the next deployment (or at once with auto_deploy = true). Volumes can only grow: a smaller size_gb is refused at plan time. Destroying a volume always restarts a running service, because its workload has to be recreated without the volume.
+  A new volume is mounted at once (or at the next deployment with auto_deploy = false). Volumes can only grow: a smaller size_gb is refused at plan time. Destroying a volume always restarts a running service, because its workload has to be recreated without the volume.
 ---
 
 # fjordrun_volume (Resource)
@@ -25,7 +25,7 @@ lifecycle {
 }
 ```
 
-A new volume is mounted at the next deployment (or at once with `auto_deploy = true`). Volumes can only grow: a smaller `size_gb` is refused at plan time. Destroying a volume always restarts a running service, because its workload has to be recreated without the volume.
+A new volume is mounted at once (or at the next deployment with `auto_deploy = false`). Volumes can only grow: a smaller `size_gb` is refused at plan time. Destroying a volume always restarts a running service, because its workload has to be recreated without the volume.
 
 ## Example Usage
 
@@ -70,7 +70,7 @@ resource "fjordrun_volume" "uploads" {
 
 ### Optional
 
-- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `false`: the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit, so an apply with several changes to a service makes one deployment).
+- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `true`). With `false` the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit.
 - `size_gb` (Number) Size in GB (default 5). Can only grow.
 
 ### Read-Only

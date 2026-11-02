@@ -37,6 +37,7 @@ resource "fjordrun_service" "web" {
   source         = { type = "image", image = "nginxdemos/hello:0.4" }
 }
 
+# Pair with auto_deploy = false on the provider or the service, or a change deploys twice.
 resource "fjordrun_deployment" "web" {
   service_id     = fjordrun_service.web.id
   environment_id = fjordrun_service.web.environment_id

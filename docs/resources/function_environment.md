@@ -54,7 +54,7 @@ resource "fjordrun_function_environment" "hello_staging" {
 ### Optional
 
 - `auth` (String) `public` (default): anyone with the URL. `token`: requests need `token` in the `token_header` header.
-- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `false`: the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit, so an apply with several changes to a service makes one deployment).
+- `auto_deploy` (Boolean) Deploy when this resource is created or changes. Leave out to use the provider's `auto_deploy` (default `true`). With `false` the change is saved and goes live with the next deployment, which `fjordrun_deployment` makes explicit.
 - `concurrency` (Number) Requests in flight per instance before another starts (1-100, default 10).
 - `entry` (String) The file that exports the handler, relative to the code root. Defaults to `index.mjs` or `main.py`.
 - `idle_timeout_s` (Number) How long an instance stays up after its last request, billed as instance time (30-900, default 120). The Trial plan fixes it at 60: any other value is an error there.

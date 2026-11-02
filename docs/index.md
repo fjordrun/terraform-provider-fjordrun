@@ -58,5 +58,5 @@ The data sources `fjordrun_meta`, `fjordrun_models`, `fjordrun_pricing` and `fjo
 ### Optional
 
 - `api_url` (String) API origin, without `/api/v1`. Defaults to the `FJORDRUN_API_URL` environment variable, else `https://api.fjordrun.com`.
-- `auto_deploy` (Boolean) Default for the `auto_deploy` attribute of resources that change what a service runs. Defaults to the `FJORDRUN_AUTO_DEPLOY` environment variable, else `false`: changes are saved without a deployment and roll out together through `fjordrun_deployment`.
+- `auto_deploy` (Boolean) Default for the `auto_deploy` attribute of resources that change what a service runs. Defaults to the `FJORDRUN_AUTO_DEPLOY` environment variable, else `true`: resources deploy when created or changed. Set `false` to save changes without a deployment and roll them out together, once per apply, through `fjordrun_deployment`.
 - `token` (String, Sensitive) API token: a team API token (`fjr_...`) or a personal access token (`fjr_pat_...`). Defaults to the `FJORDRUN_TOKEN` environment variable. Some operations are refused for team tokens (creating teams and tokens, SSH keys); use a personal access token for those.

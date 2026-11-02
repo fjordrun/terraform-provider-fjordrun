@@ -2,7 +2,7 @@
 page_title: "Deployments"
 subcategory: ""
 description: |-
-  How changes reach running services: explicit deployments, driven by triggers.
+  How changes reach running services: automatic by default, or one explicit rollout per apply.
 ---
 
 # Deployments
@@ -10,9 +10,16 @@ description: |-
 On the API, saving a service's settings or variables redeploys it if it is running. An apply often changes several things
 for one service, so with the API's default it would deploy several times, each with half of the changes.
 
-This provider therefore saves changes **without deploying**, and you say when to roll out:
+This provider deploys by default too: **a resource deploys when it is created and when it changes**, so a service you
+declare actually runs. That can mean several deployments in one apply when several resources change for one service.
+
+For one rollout per apply, set `auto_deploy = false` and say when to roll out:
 
 ```terraform
+provider "fjordrun" {
+  auto_deploy = false
+}
+
 resource "fjordrun_deployment" "web" {
   service_id     = fjordrun_service.web.id
   environment_id = fjordrun_service.web.environment_id
@@ -43,14 +50,13 @@ Growing a volume needs no deployment, and a domain or public TCP port goes live 
 If a service gets no `fjordrun_deployment`, nothing runs and changes stay unapplied. The API's `status`
 (`fjordrun_service.status`) shows `inactive` for a service that was never deployed.
 
-## Letting a resource deploy by itself
+## Choosing per resource
 
-`auto_deploy = true` on a resource, or on the provider for all resources, makes it behave like the API's default: it
-deploys when it is created and when it changes. That is convenient for a service managed by one resource alone. Across
-resources it means one deployment per resource that changed, each with what is saved so far.
+`auto_deploy` on a resource overrides the provider's setting. Use `fjordrun_deployment` only with `auto_deploy = false`:
+with both, a change deploys twice.
 
-`fjordrun_function` is one resource with its code and settings, so `auto_deploy = true` on it makes one deployment per
-apply of that resource, and `wait = true` reports whether it worked.
+`fjordrun_function` is one resource with its code and settings, so it makes one deployment per apply of that resource by
+default, and `wait = true` reports whether it worked.
 
 ## What still restarts a service
 
