@@ -43,6 +43,7 @@ deployment per apply, per service and environment**, with all the changes in it.
 | Shared variables | `fjordrun_shared_variables.x.variables_hash` |
 | A new volume | `fjordrun_volume.x.id` |
 | Function code | `fjordrun_function.x.code_sha256` |
+| A function's image | `fjordrun_function.x.image` (a moved tag needs its own trigger: redeploying resolves it again) |
 | A new commit on the branch | Pass the SHA in, for example `var.commit_sha` |
 
 Growing a volume needs no deployment, and a domain or public TCP port goes live without one.

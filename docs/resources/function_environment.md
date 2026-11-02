@@ -72,6 +72,7 @@ resource "fjordrun_function_environment" "hello_staging" {
 - `code_sha256` (String) Hash of the saved inline code, shared by all environments. Null for code from GitHub.
 - `deployed_sha256` (String) Hash of the inline code the live deployment runs. Equal to `code_sha256` once the saved code is deployed.
 - `id` (String) `function_id/environment_id`.
+- `image_digest` (String) The digest the live deployment runs, for a function from a Docker image: instances start exactly this until the next deployment, even if the image's tag moves. Null otherwise.
 - `status` (String) Status in this environment: `inactive`, `building`, `deploying`, `active`, `sleeping`, `failed`...
 - `token` (String, Sensitive) The token callers send, with `auth = "token"`. Null otherwise. Each environment has its own.
 - `token_header` (String) The header that carries the token, with `auth = "token"`.

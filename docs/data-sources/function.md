@@ -144,6 +144,7 @@ Read-Only:
 - `deployed_sha256` (String) Hash of the live code.
 - `entry` (String) Entry file.
 - `idle_timeout_s` (Number) Idle window.
+- `image` (Attributes) The Docker image it runs instead of code, if any. (see [below for nested schema](#nestedatt--function--image))
 - `max_replicas` (Number) Most instances.
 - `memory_mb` (Number) Memory.
 - `runtime` (String) Runtime.
@@ -162,6 +163,19 @@ Read-Only:
 - `paths` (List of String) File paths.
 - `sha256` (String) Hash.
 - `size_bytes` (Number) Size.
+
+
+<a id="nestedatt--function--image"></a>
+### Nested Schema for `function.image`
+
+Read-Only:
+
+- `deployed_digest` (String) The digest the live deployment resolved it to.
+- `deployed_ref` (String) The image of the live deployment.
+- `pinned` (String) The reference the live deployment runs: repository@digest.
+- `platform` (String) Platform of the variant that runs.
+- `ref` (String) The configured image.
+- `size_bytes` (Number) Compressed size of that variant.
 
 
 
